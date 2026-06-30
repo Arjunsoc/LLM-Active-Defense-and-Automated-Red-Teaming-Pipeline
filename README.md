@@ -1,1 +1,1 @@
-# LLM-Security-Adversarial-Threat-Hunting-Lab
+# LLM Active Defense & Automated Red Teaming Pipeline

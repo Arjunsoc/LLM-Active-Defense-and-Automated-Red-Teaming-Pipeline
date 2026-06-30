@@ -1,7 +1,7 @@
 # LLM Active Defense & Automated Red Teaming Pipeline
 
 
-## Project Objectives
+## Project Overview
 1. **Detection Engineering (Blue Team):** Establish a seamless pipeline routing structured LLM interaction logs into a Wazuh SIEM for real-time monitoring and alert generation.
 2. **Automated Vulnerability Assessment (Red Team):** Execute programmatic adversarial attacks using standardized LLM vulnerability scanners to validate SOC detection logic against established threat vectors (e.g., OWASP Top 10 for LLMs).
 
@@ -11,13 +11,42 @@
 - **SIEM Integration:** Wazuh Agent (Windows) and Wazuh Manager (Ubuntu) configured with custom XML decoders to flag prompt injection attempts.
 - **Red Teaming Engine :** Automated vulnerability probing utilizing NVIDIA's Garak framework.
 
-##  Repository Structure
-- `/ai_agent.py` - Core telemetry loop and heuristic classifier.
-- `/wazuh-configs/` - SIEM integration files (`ossec_agent_snippet.xml` and `local_rules.xml`).
-- `/red-teaming-automation/` - (Phase 2) Automated attack scripts and payload generation.
-
-## 🚦 Implementation Phases
+##  Implementation Phases
 -  **Phase 1:** Configure LLM endpoint and establish baseline Python telemetry script.
+-  **Objective:** To deploy a local LLM endpoint and establish a middleware proxy that intercepts user prompts, queries the AI, and generates structured security logs based on heuristic classifications.
+
+-  **Detection Engineering Logic:** A Python script (`ai_agent.py`) acts as a wrapper around a local Ollama API running the `llama3:8b` model. Before passing the user's input to the model, the script evaluates the prompt against known malicious keywords and jailbreak patterns (e.g., "bypass", "ignore previous instructions", "drop tables"). If a match is found, it tags the event's `security_classification` as `suspicious_injection`. The proxy then writes this payload to a local log file (`ai_soc_telemetry.log`) in a structured JSON format for the SIEM agent to ingest.
+
+```
+<img width="752" height="87" alt="image" src="https://github.com/user-attachments/assets/c993c236-66a6-4d98-bdf7-142f88828036" />
+```
+
+Wazuh Agent (Windows) and Wazuh Manager (Ubuntu) configured with custom XML decoders to flag prompt injection attempts.
+
+```xml
+<group name="local_ai_security,">
+  <!-- Parent Rule: Decodes the raw JSON incoming from the log path -->
+  <rule id="100200" level="3">
+    <decoded_as>json</decoded_as>
+    <field name="model">^llama3:8b</field>
+    <description>Local AI Model interaction logged.</description>
+  </rule>
+
+  <!-- Child Rule: Triggers an alert if a prompt triggers our heuristic check -->
+  <rule id="100201" level="8">
+    <if_sid>100200</if_sid>
+    <field name="security_classification">^suspicious_injection</field>
+    <description>Adversarial AI Security Alert: Suspicious LLM prompt injection pattern detected!</description>
+    <group>ai_attack,injection_attempt,</group>
+  </rule>
+</group>
+```
+
+```
+<img width="748" height="252" alt="Screenshot 2026-06-30 154109" src="https://github.com/user-attachments/assets/1b5b0933-4fca-44cf-82d5-8c6082ae6a8a" />
+
+```
+
 -  **Phase 2:** Engineer Wazuh SIEM rules and map JSON logs to custom security alerts.
 -  **Phase 3:** Deploy Garak for automated Red Teaming and mass payload execution.
 -  **Phase 4:** Validate SIEM alert generation against the automated attack traffic.

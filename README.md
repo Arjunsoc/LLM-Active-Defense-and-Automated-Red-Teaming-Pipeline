@@ -17,12 +17,6 @@
 
 -  **Detection Engineering Logic:** A Python script (`ai_agent.py`) acts as a wrapper around a local Ollama API running the `llama3:8b` model. Before passing the user's input to the model, the script evaluates the prompt against known malicious keywords and jailbreak patterns (e.g., "bypass", "ignore previous instructions", "drop tables"). If a match is found, it tags the event's `security_classification` as `suspicious_injection`. The proxy then writes this payload to a local log file (`ai_soc_telemetry.log`) in a structured JSON format for the SIEM agent to ingest.
 
-```
-<img width="752" height="87" alt="image" src="https://github.com/user-attachments/assets/c993c236-66a6-4d98-bdf7-142f88828036" />
-```
-
-Wazuh Agent (Windows) and Wazuh Manager (Ubuntu) configured with custom XML decoders to flag prompt injection attempts.
-
 ```xml
 <group name="local_ai_security,">
   <!-- Parent Rule: Decodes the raw JSON incoming from the log path -->
@@ -41,6 +35,13 @@ Wazuh Agent (Windows) and Wazuh Manager (Ubuntu) configured with custom XML deco
   </rule>
 </group>
 ```
+
+```
+<img width="752" height="87" alt="image" src="https://github.com/user-attachments/assets/c993c236-66a6-4d98-bdf7-142f88828036" />
+```
+
+Wazuh Agent (Windows) and Wazuh Manager (Ubuntu) configured with custom XML decoders to flag prompt injection attempts.
+
 
 ```
 <img width="748" height="252" alt="Screenshot 2026-06-30 154109" src="https://github.com/user-attachments/assets/1b5b0933-4fca-44cf-82d5-8c6082ae6a8a" />

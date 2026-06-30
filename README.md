@@ -8,7 +8,7 @@
 ##  Architecture
 - **Target LLM:** Local deployment of Llama 3 (8B) via Ollama.
 - **Telemetry & Interception:** Custom Python middleware acting as an application-layer proxy, generating JSON-formatted security events.
-- **SIEM / SOC Integration:** Wazuh Agent (Windows) and Wazuh Manager (Ubuntu) configured with custom XML decoders to flag prompt injection attempts.
+- **SIEM Integration:** Wazuh Agent (Windows) and Wazuh Manager (Ubuntu) configured with custom XML decoders to flag prompt injection attempts.
 - **Red Teaming Engine (Upcoming):** Automated vulnerability probing utilizing NVIDIA's Garak framework.
 
 ##  Repository Structure

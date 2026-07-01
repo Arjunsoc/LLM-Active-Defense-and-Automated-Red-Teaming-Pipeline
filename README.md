@@ -45,9 +45,15 @@
 <img width="1172" height="126" alt="Screenshot 2026-07-01 145526" src="https://github.com/user-attachments/assets/a806be00-953a-4dc8-bfb7-dada9666dabf" />
 
 
-
 <img width="637" height="215" alt="Screenshot 2026-07-01 145606" src="https://github.com/user-attachments/assets/51784c73-5877-41dd-9492-0ec08aef84e1" />
 
+
+  - **3. System Override**
+
+<img width="1165" height="116" alt="Screenshot 2026-07-01 150449" src="https://github.com/user-attachments/assets/7aca7d74-3e7c-43f5-8d76-a2eae6fd5c75" />
+
+
+<img width="647" height="212" alt="Screenshot 2026-07-01 150621" src="https://github.com/user-attachments/assets/c79ac510-9da2-4a4d-a31c-02f856ad5493" />
 
 
 -  **Phase 2:** Engineer Wazuh SIEM rules and map JSON logs to custom security alerts.

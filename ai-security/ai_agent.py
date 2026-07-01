@@ -1,6 +1,7 @@
 import os
 import json
 import datetime
+import re
 from ollama import Client
 
 # Configuration matching our secure folder structure
@@ -23,10 +24,22 @@ def log_event(prompt, response, classification="benign"):
         f.write(json.dumps(log_data) + "\n")
 
 def check_malicious(prompt):
-    """Simple defensive heuristic classification."""
-    malicious_keywords = ["drop table", "select * from", "exec(", "eval(", "payload", "reverse shell", "bypass"]
-    if any(keyword in prompt.lower() for keyword in malicious_keywords):
-        return "suspicious_injection"
+    """Advanced heuristic regex classification matching our complex attack matrix."""
+    prompt_lower = prompt.lower()
+    
+    # Advanced Heuristic Regex Signatures
+    patterns = {
+        "dan_jailbreak": r"(dan mode|do anything now|broken free of.*constraints)",
+        "obfuscation_attempt": r"(base64|decode|binary|hex encoded|traduzca|translate)",
+        "system_override": r"(system-level override|disregard.*foundational|print.*original.*instructions|stop\.)",
+        "suspicious_injection": r"(bypass safety|drop table|select \* from|exec\(|eval\(|payload|reverse shell)"
+    }
+    
+    # Iterate through signatures to find specific attack classes dynamically
+    for classification, regex in patterns.items():
+        if re.search(regex, prompt_lower):
+            return classification
+            
     return "benign"
 
 def main():
@@ -36,23 +49,31 @@ def main():
     
     while True:
         try:
-            user_input = input("User Prompt >>> ")
-            if user_input.lower() in ['exit', 'quit']:
-                break
-                
-            if not user_input.strip():
+            # Use strip() directly on the input to handle empty enters safely
+            user_input = input("User Prompt >>> ").strip()
+            
+            # Skip the iteration entirely if the user just hit enter without typing
+            if not user_input:
                 continue
                 
+            if user_input.lower() in ['exit', 'quit']:
+                print("Exiting AI interface cleanly...")
+                break
+                
+            # Evaluate the prompt using advanced multi-classification heuristics
             classification = check_malicious(user_input)
             
+            # Contact the local Llama 3 instance
             response = client.generate(model=MODEL_NAME, prompt=user_input)
             ai_reply = response['response']
             
             print(f"\nAI Response: {ai_reply}\n")
             
+            # Log structured JSON telemetry to file path for Wazuh ingestion
             log_event(user_input, ai_reply, classification)
             
         except KeyboardInterrupt:
+            print("\nExiting AI interface cleanly...")
             break
         except Exception as e:
             print(f"Error communicating with local AI model: {e}")

@@ -12,29 +12,11 @@
 - **Red Teaming Engine :** Automated vulnerability probing utilizing NVIDIA's Garak framework.
 
 ##  Implementation Phases
--  **Phase 1:** Configure LLM endpoint and establish baseline Python telemetry script.
+-  ### Phase 1: Configure LLM endpoint and establish baseline Python telemetry script.
+  
 -  **Objective:** To deploy a local LLM endpoint and establish a middleware proxy that intercepts user prompts, queries the AI, and generates structured security logs based on heuristic classifications.
-
+   
 -  **Detection Engineering Logic:** A Python script (`ai_agent.py`) acts as a wrapper around a local Ollama API running the `llama3:8b` model. Before passing the user's input to the model, the script evaluates the prompt against known malicious keywords and jailbreak patterns (e.g., "bypass", "ignore previous instructions", "drop tables"). If a match is found, it tags the event's `security_classification` as `suspicious_injection`. The proxy then writes this payload to a local log file (`ai_soc_telemetry.log`) in a structured JSON format for the SIEM agent to ingest.
-
-```xml
-<group name="local_ai_security,">
-  <!-- Parent Rule: Decodes the raw JSON incoming from the log path -->
-  <rule id="100200" level="3">
-    <decoded_as>json</decoded_as>
-    <field name="model">^llama3:8b</field>
-    <description>Local AI Model interaction logged.</description>
-  </rule>
-
-  <!-- Child Rule: Triggers an alert if a prompt triggers our heuristic check -->
-  <rule id="100201" level="8">
-    <if_sid>100200</if_sid>
-    <field name="security_classification">^suspicious_injection</field>
-    <description>Adversarial AI Security Alert: Suspicious LLM prompt injection pattern detected!</description>
-    <group>ai_attack,injection_attempt,</group>
-  </rule>
-</group>
-```
 
 
 <img width="752" height="87" alt="image" src="https://github.com/user-attachments/assets/c993c236-66a6-4d98-bdf7-142f88828036" />

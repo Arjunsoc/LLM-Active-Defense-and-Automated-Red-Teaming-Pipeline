@@ -1,0 +1,35 @@
+<group name="local_ai_security,">
+  <rule id="100200" level="3">
+    <decoded_as>json</decoded_as>
+    <field name="model">^llama3:8b</field>
+    <description>Local AI Model interaction logged.</description>
+  </rule>
+
+  <rule id="100201" level="7">
+    <if_sid>100200</if_sid>
+    <field name="security_classification">^suspicious_injection</field>
+    <description>AI Security: Standard Prompt Injection signature matched.</description>
+    <group>ai_attack,injection_attempt,</group>
+  </rule>
+
+  <rule id="100202" level="9">
+    <if_sid>100200</if_sid>
+    <field name="security_classification">^dan_jailbreak</field>
+    <description>CRITICAL AI Security Alert: Adversarial 'DAN' Roleplay Jailbreak detected!</description>
+    <group>ai_attack,jailbreak_attempt,</group>
+  </rule>
+
+  <rule id="100203" level="8">
+    <if_sid>100200</if_sid>
+    <field name="security_classification">^obfuscation_attempt</field>
+    <description>AI Security Alert: Payload obfuscation / encoding bypass attempt identified.</description>
+    <group>ai_attack,defense_evasion,</group>
+  </rule>
+
+  <rule id="100204" level="9">
+    <if_sid>100200</if_sid>
+    <field name="security_classification">^system_override</field>
+    <description>CRITICAL AI Security Alert: Malicious System Prompt Override attempt.</description>
+    <group>ai_attack,privilege_escalation,</group>
+  </rule>
+</group>

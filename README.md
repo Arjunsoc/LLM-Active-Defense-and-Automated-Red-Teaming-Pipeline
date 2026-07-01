@@ -40,6 +40,15 @@
 <img width="657" height="198" alt="image" src="https://github.com/user-attachments/assets/35e3f496-5f64-4bdc-a90f-c41539c96a1b" />
 
 
+  - **2. Obfuscation**
+
+<img width="1172" height="126" alt="Screenshot 2026-07-01 145526" src="https://github.com/user-attachments/assets/a806be00-953a-4dc8-bfb7-dada9666dabf" />
+
+
+
+<img width="637" height="215" alt="Screenshot 2026-07-01 145606" src="https://github.com/user-attachments/assets/51784c73-5877-41dd-9492-0ec08aef84e1" />
+
+
 
 -  **Phase 2:** Engineer Wazuh SIEM rules and map JSON logs to custom security alerts.
 -  **Phase 3:** Deploy Garak for automated Red Teaming and mass payload execution.

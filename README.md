@@ -12,7 +12,7 @@
 - **Red Teaming Engine :** Automated vulnerability probing utilizing NVIDIA's Garak framework.
 
 ##  Implementation Phases
--  ### Phase 1: Configure LLM endpoint and establish baseline Python telemetry script.
+-  ### Phase 1: Configure LLM endpoint and establish baseline Python telemetry script $ Engineer Wazuh SIEM rules and map JSON logs to custom security alerts.
   
 -  **Objective:** To deploy a local LLM endpoint and establish a middleware proxy that intercepts user prompts, queries the AI, and generates structured security logs based on heuristic classifications.
    
@@ -25,9 +25,13 @@
 ****Wazuh Agent (Windows) and Wazuh Manager (Ubuntu) configured with custom XML decoders to flag prompt injection attempts.****
 
 
+
 <img width="748" height="252" alt="Screenshot 2026-06-30 154109" src="https://github.com/user-attachments/assets/1b5b0933-4fca-44cf-82d5-8c6082ae6a8a" />
 
 
+
+  ### **Advanced Attack Prompts*
+   - **1. The 'DAN' Jailbreak**
 
 -  **Phase 2:** Engineer Wazuh SIEM rules and map JSON logs to custom security alerts.
 -  **Phase 3:** Deploy Garak for automated Red Teaming and mass payload execution.

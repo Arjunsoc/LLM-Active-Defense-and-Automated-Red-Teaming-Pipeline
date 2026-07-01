@@ -34,6 +34,13 @@
   ### **Advanced Attack Prompts*
    - **1. The 'DAN' Jailbreak**
 
+<img width="1172" height="111" alt="image" src="https://github.com/user-attachments/assets/95aa05cb-c6a9-4b3d-b5d5-1f7e42344a40" />
+
+
+<img width="657" height="198" alt="image" src="https://github.com/user-attachments/assets/35e3f496-5f64-4bdc-a90f-c41539c96a1b" />
+
+
+
 -  **Phase 2:** Engineer Wazuh SIEM rules and map JSON logs to custom security alerts.
 -  **Phase 3:** Deploy Garak for automated Red Teaming and mass payload execution.
 -  **Phase 4:** Validate SIEM alert generation against the automated attack traffic.

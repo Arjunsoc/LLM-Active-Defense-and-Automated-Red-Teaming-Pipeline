@@ -11,7 +11,7 @@
 - **SIEM Integration:** Wazuh Agent (Windows) and Wazuh Manager (Ubuntu) configured with custom XML decoders to flag prompt injection attempts.
 - **Red Teaming Engine :** Automated vulnerability probing utilizing NVIDIA's Garak framework.
 
-##  Implementation Phases
+##  Implementation & Results 
 -  ### Phase 1: Configure LLM endpoint and establish baseline Python telemetry script $ Engineer Wazuh SIEM rules and map JSON logs to custom security alerts.
   
 -  **Objective:** To deploy a local LLM endpoint and establish a middleware proxy that intercepts user prompts, queries the AI, and generates structured security logs based on heuristic classifications.
@@ -23,6 +23,7 @@
 
 
 ****Wazuh Agent (Windows) and Wazuh Manager (Ubuntu) configured with custom XML decoders to flag prompt injection attempts.****
+
 
 
 
